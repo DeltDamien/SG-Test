@@ -24,8 +24,10 @@ jobs:
     - name: Build project
       run: npm run build 
 
+      # Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # Utiliser le token automatique de GitHub Actions
-          publish_dir: ./dist  # Répertoire des fichiers générés après la construction
+        branch: gh-pages  # Target the gh-pages branch
+        folder: dist  # Folder to deploy (Vite’s build output)
+        token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
