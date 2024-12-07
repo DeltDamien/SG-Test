@@ -7,12 +7,14 @@ export class Scene extends PIXI.Container {
     protected gameplayContainer :PIXI.Container;
     protected uiContainer : PIXI.Container;
     protected backgroundContainer : PIXI.Container;
+    private sceneConfig: SceneConfig;
 
-     constructor(private readonly sceneConfig: SceneConfig, private readonly app : PIXI.Application<HTMLCanvasElement>) {
+     constructor(sceneConfig: SceneConfig, protected readonly app : PIXI.Application<HTMLCanvasElement>) {
         super();
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         this.app.stage.addChild(this);
+        this.sceneConfig = sceneConfig
 
         this.gameplayContainer = new PIXI.Container();
 

@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import {ButtonContainer} from "@pixi/ui"
 import {ScenesConstants} from "../scenes/scenesConstants";
-import {Container, Graphics} from "pixi.js";
+import {Container} from "pixi.js";
 import {ScenesController} from "../scenes/scenesController";
 
 interface MenuProps {
