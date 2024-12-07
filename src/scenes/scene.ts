@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 import {ScenesConstants} from "./scenesConstants";
 import {SceneConfig} from "./scenesController";
-import {TextStyle} from "pixi.js";
 
 export class Scene extends PIXI.Container {
 
@@ -53,7 +52,7 @@ export class Scene extends PIXI.Container {
         titleText.x = 50;
         titleText.y = 220;
 
-        titleText.position.set(50, 50);
+        titleText.position.set(ScenesConstants.headerOffset + ScenesConstants.spacing, ScenesConstants.headerOffset + ScenesConstants.spacing);
     }
 
     protected initializeBackground(backgroundImageId: string | undefined) {

@@ -80,5 +80,9 @@ export class ScenesController {
             this.currentScene.update(deltaTime);
         }
     }
+
+    public getSceneIds(): string[] {
+        return Array.from(this.scenes.keys());
+    }
 }
 
