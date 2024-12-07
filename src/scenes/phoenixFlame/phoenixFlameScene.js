@@ -1,9 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { Emitter } from '@pixi/particle-emitter';
 import { Scene } from '../scene';
-import { SceneConfig } from '../scenesController';
 import { ScenesConstants } from '../scenesConstants';
-
 const emitterConfig = {
     lifetime: {
         min: 0,
@@ -95,38 +93,39 @@ const emitterConfig = {
         }
     ]
 };
-
 export class PhoenixFlameScene extends Scene {
-
-    private readonly particleContainer: PIXI.ParticleContainer;
-    private readonly particleEmitter: Emitter;
-
-    constructor(sceneConfig: SceneConfig, application: PIXI.Application<HTMLCanvasElement>) {
+    constructor(sceneConfig, application) {
         super(sceneConfig, application);
-
+        Object.defineProperty(this, "particleContainer", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "particleEmitter", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
         // Conteneur des particules
         this.particleContainer = new PIXI.ParticleContainer(10, { alpha: true, scale: true, rotation: true, tint: true });
         this.gameplayContainer.addChild(this.particleContainer);
-
         this.particleEmitter = new Emitter(this.particleContainer, emitterConfig);
         this.particleEmitter.spawnPos.x = this.app.screen.width / 2;
         this.particleEmitter.spawnPos.y = this.app.screen.height / 2;
     }
-
-    public override start(): void {
+    start() {
         super.start();
         this.particleEmitter.emit = true;
     }
-
-    public override update(deltaTime: number): void {
+    update(deltaTime) {
         super.update(deltaTime);
         console.log(this.particleEmitter.particleCount);
         this.particleEmitter.update(deltaTime);
     }
-
-    public override disable(): void {
+    disable() {
         super.destroy();
-
         this.particleEmitter.emit = false;
     }
 }

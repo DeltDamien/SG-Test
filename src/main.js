@@ -1,22 +1,6 @@
-import './style.css';
-import typescriptLogo from './typescript.svg';
-import viteLogo from '/vite.svg';
-import { setupCounter } from './counter';
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-     tes test test
-    </p>
-  </div>
-`;
-setupCounter(document.querySelector('#counter'));
+import { Game } from './game/game';
+window.onload = () => {
+    console.log("Game started");
+    const game = new Game();
+    game.initialize().then(() => console.log("Game initialized"));
+};
