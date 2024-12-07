@@ -1,0 +1,17 @@
+{
+  "scenes": [
+    {
+      "id": "aceOfShadows",
+      "displayName": "Ace of shadows",
+      "backgroundImageId": "balatroBackground.png"
+    },
+    {
+      "id": "magicWords",
+      "displayName": "Magic Words"
+    },
+    {
+      "id": "phoenixFlame",
+      "displayName": "Phoenix Flame"
+    }
+  ]
+}
