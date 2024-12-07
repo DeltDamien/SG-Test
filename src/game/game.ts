@@ -20,10 +20,7 @@ export class Game {
         window.addEventListener('resize', () => this.onResize());
         this.sceneController = new ScenesController(this.application);
         this.mainMenu = new MainMenu(
-            {sceneIds: this.sceneController.getSceneIds(),
-                onSwitchToScene: this.sceneController.switchToSceneId.bind(this.sceneController),
-                getCurrentFPS: () => {return this.application.ticker.FPS;}
-        },this.application)
+            {getCurrentFPS: () => {return this.application.ticker.FPS;}},this.application, this.sceneController);
     }
 
     public async initialize() {
@@ -32,6 +29,7 @@ export class Game {
         console.log(this.application.stage.children);
         this.application.ticker.maxFPS = 60;
         this.application.ticker.add((deltaTime) => this.update(deltaTime));
+        this.mainMenu.initializeSwitchScenesButtons();
     }
 
     private onResize(): void {
