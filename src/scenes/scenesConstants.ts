@@ -4,7 +4,7 @@ export const ScenesConstants = {
     uiContainerZIndex: 10,
     headerOffset: 50,
     spacing:8,
-    sceneConfigPath: "src/assets/configs/scenesConfigs.json",
-    imagesAssetFolder: "src/assets/images/",
+    sceneConfigPath: "assets/configs/scenesConfigs.json",
+    imagesAssetFolder: "assets/images/",
     defaultBackgroundImageId: "defaultBackground.png",
 }
