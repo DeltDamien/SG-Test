@@ -22,6 +22,7 @@ export class Game {
         this.sceneController = new ScenesController(this.application);
         this.mainMenu = new MainMenu(
             {getCurrentFPS: () => {return this.application.ticker.FPS;}},this.application, this.sceneController);
+        this.onResize();
     }
 
     public async initialize() {
