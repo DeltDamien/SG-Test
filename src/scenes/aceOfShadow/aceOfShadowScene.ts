@@ -8,7 +8,7 @@ import {Ticker} from "pixi.js";
 const AceOfShadowConstants = {
     totalCard: 144,
     belowCardOffset: 10,
-    stackXOffset: 300,
+    stackXOffset: 200,
     moveEverySeconds: 1,
     timeToMove: 2,
 }
@@ -29,8 +29,8 @@ export class AceOfShadowsScene extends Scene {
         super(config, app);
 
         this.loadImages();
-        this.firstStackPosition =  {x : this.app.screen.width * 0.5 - AceOfShadowConstants.stackXOffset, y: this.app.screen.height * 0.4};
-        this.secondStackPosition =  {x : this.app.screen.width * 0.5 + AceOfShadowConstants.stackXOffset, y: this.app.screen.height * 0.4};
+        this.firstStackPosition =  {x : this.app.screen.width * 0.3 - AceOfShadowConstants.stackXOffset, y: this.app.screen.height * 0.4};
+        this.secondStackPosition =  {x : this.app.screen.width * 0.3 + AceOfShadowConstants.stackXOffset, y: this.app.screen.height * 0.4};
 
         this.animationTicker = new PIXI.Ticker();
         this.animationTicker.add(this.handleAnimation, this);
@@ -158,4 +158,23 @@ export class AceOfShadowsScene extends Scene {
     }
 
     public override update(_deltaTime: number): void {}
+
+    public override onResize() {
+        super.onResize();
+        this.firstStackPosition = {
+            x: this.app.screen.width * 0.3 - AceOfShadowConstants.stackXOffset,
+            y: this.app.screen.height * 0.4
+        };
+        this.secondStackPosition = {
+            x: this.app.screen.width * 0.3 + AceOfShadowConstants.stackXOffset,
+            y: this.app.screen.height * 0.4
+        };
+        for (let i = 0; i < this.firstStack.length; i++) {
+            this.initializeCardPosition(i, this.firstStack[i]);
+        }
+        for (let i = 0; i < this.secondStack.length; i++) {
+            this.secondStack[i].x = this.secondStackPosition.x;
+            this.secondStack[i].y = this.secondStackPosition.y;
+        }
+    }
 }

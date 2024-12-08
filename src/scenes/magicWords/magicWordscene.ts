@@ -332,4 +332,8 @@ export class MagicWordsScene extends Scene {
     public override disable() {
         super.disable();
     }
+
+    public override onResize() {
+        super.onResize();
+    }
 }
