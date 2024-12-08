@@ -10,11 +10,11 @@ export class Game {
 
     constructor() {
         this.application = new PIXI.Application<HTMLCanvasElement>({
-            width: window.innerWidth / 1920,
-            height: window.innerHeight / 1080,
+            width: window.innerWidth,
+            height: window.innerHeight,
             resolution: window.devicePixelRatio || 1,
             autoDensity: true,
-            resizeTo: window
+            resizeTo: window,
         });
 
         document.body.appendChild(this.application.view);
@@ -33,11 +33,9 @@ export class Game {
     }
 
     private onResize(): void {
-        const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
-
-        this.application.stage.scale.set(scale);
-
-        // Mise à jour de la scène après redimensionnement
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        this.application.renderer.resize(width, height);
         this.sceneController.resize();
     }
 
