@@ -100,7 +100,7 @@ export class Scene extends PIXI.Container {
             this.resizeBackground(screenAspectRatio, backgroundSprite.width / backgroundSprite.height);
         }
 
-      //  this.resizeContainers(screenAspectRatio);
+       this.resizeContainers(screenAspectRatio);
     }
 
     private resizeBackground(screenAspectRatio: number, backgroundAspectRatio: number) {
