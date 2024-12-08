@@ -10,11 +10,11 @@ export class Game {
 
     constructor() {
         this.application = new PIXI.Application<HTMLCanvasElement>({
-            width: window.innerWidth / 1920,
-            height: window.innerHeight / 1080,
+            width: window.innerWidth,
+            height: window.innerHeight,
             resolution: window.devicePixelRatio || 1,
             autoDensity: true,
-            resizeTo: window
+            resizeTo: window,
         });
 
         document.body.appendChild(this.application.view);
@@ -22,6 +22,7 @@ export class Game {
         this.sceneController = new ScenesController(this.application);
         this.mainMenu = new MainMenu(
             {getCurrentFPS: () => {return this.application.ticker.FPS;}},this.application, this.sceneController);
+        this.onResize();
     }
 
     public async initialize() {
@@ -33,12 +34,21 @@ export class Game {
     }
 
     private onResize(): void {
-        const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+        const size = [1920, 1080];
+        const ratio = size[0] / size[1];
 
-        this.application.stage.scale.set(scale);
+        let w, h;
 
-        // Mise à jour de la scène après redimensionnement
-        this.sceneController.resize();
+        if (window.innerWidth / window.innerHeight >= ratio) {
+             w = window.innerHeight * ratio;
+             h = window.innerHeight;
+        } else {
+             w = window.innerWidth;
+             h = window.innerWidth / ratio;
+        }
+        this.application.renderer.view.style.width = w + 'px';
+        this.application.renderer.view.style.height = h + 'px';
+
     }
 
     public update(deltaTime: number) {
