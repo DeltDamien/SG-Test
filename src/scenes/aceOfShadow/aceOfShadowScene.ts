@@ -166,6 +166,7 @@ export class AceOfShadowsScene extends Scene {
         const screenHeight = this.app.screen.height;
 
         const isPortrait = screenHeight > screenWidth;
+        console.log(screenWidth, screenHeight, isPortrait);
 
         // move decks to side by side if landscape and one on top of the other if portrait
         if (isPortrait) {
