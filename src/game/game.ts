@@ -10,8 +10,8 @@ export class Game {
 
     constructor() {
         this.application = new PIXI.Application<HTMLCanvasElement>({
-            width: window.innerWidth,
-            height: window.innerHeight,
+            width: window.innerWidth / 1920,
+            height: window.innerHeight / 1080,
             resolution: window.devicePixelRatio || 1,
             autoDensity: true,
             resizeTo: window
