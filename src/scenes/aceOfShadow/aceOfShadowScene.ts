@@ -165,8 +165,16 @@ export class AceOfShadowsScene extends Scene {
         const screenWidth = this.app.screen.width;
         const screenHeight = this.app.screen.height;
 
-        this.firstStackPosition =  {x : screenWidth * 0.5 - AceOfShadowConstants.stackXOffset, y: screenHeight * 0.4};
-        this.secondStackPosition =  {x : screenWidth * 0.5 + AceOfShadowConstants.stackXOffset, y: screenHeight * 0.4};
+        const isPortrait = screenHeight > screenWidth;
+
+        // move decks to side by side if landscape and one on top of the other if portrait
+        if (isPortrait) {
+            this.firstStackPosition = { x: screenWidth * 0.5 - AceOfShadowConstants.stackXOffset, y: screenHeight * 0.3 };
+            this.secondStackPosition = { x: screenWidth * 0.5 - AceOfShadowConstants.stackXOffset, y: screenHeight * 0.6 };
+        } else {
+            this.firstStackPosition = { x: screenWidth * 0.5 - AceOfShadowConstants.stackXOffset, y: screenHeight * 0.4 };
+            this.secondStackPosition = { x: screenWidth * 0.5 + AceOfShadowConstants.stackXOffset, y: screenHeight * 0.4 };
+        }
 
         for (let i = 0; i < this.firstStack.length; i++) {
             const card = this.firstStack[i];
