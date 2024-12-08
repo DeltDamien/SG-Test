@@ -33,7 +33,11 @@ export class Game {
     }
 
     private onResize(): void {
-        this.application.renderer.resize(window.innerWidth, window.innerHeight);
+        const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+
+        this.application.stage.scale.set(scale);
+
+        // Mise à jour de la scène après redimensionnement
         this.sceneController.resize();
     }
 
