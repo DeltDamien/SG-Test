@@ -36,7 +36,6 @@ export class Game {
     private onResize(): void {
         const width = window.innerWidth;
         const height = window.innerHeight;
-        console.log(`Resizing to ${width}x${height}`);
         this.application.renderer.resize(width, height);
         this.sceneController.resize();
     }

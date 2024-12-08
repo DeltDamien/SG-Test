@@ -94,14 +94,16 @@ export class Scene extends PIXI.Container {
 
     public onResize() {
         const screenAspectRatio = this.getScreenAspectRatio();
+
         const backgroundSprite = this.backgroundContainer.children[0] as PIXI.Sprite;
         if (backgroundSprite) {
-            this.resizeBackground(screenAspectRatio, backgroundSprite.width / backgroundSprite.height)
+            this.resizeBackground(screenAspectRatio, backgroundSprite.width / backgroundSprite.height);
         }
+
+        this.resizeContainers(screenAspectRatio);
     }
 
-    private resizeBackground(screenAspectRatio:number, backgroundAspectRatio: number){
-
+    private resizeBackground(screenAspectRatio: number, backgroundAspectRatio: number) {
         if (screenAspectRatio > backgroundAspectRatio) {
             this.backgroundContainer.width = this.app.screen.width;
             this.backgroundContainer.height = this.backgroundContainer.width / backgroundAspectRatio;
@@ -112,5 +114,18 @@ export class Scene extends PIXI.Container {
 
         this.backgroundContainer.x = this.app.screen.width / 2;
         this.backgroundContainer.y = this.app.screen.height / 2;
+    }
+
+    private resizeContainers(screenAspectRatio: number) {
+        const gameplayScale = this.calculateScale(screenAspectRatio);
+        const uiScale = this.calculateScale(screenAspectRatio);
+
+        this.gameplayContainer.scale.set(gameplayScale);
+
+        this.uiContainer.scale.set(uiScale);
+    }
+
+    private calculateScale(aspectRatio: number): number {
+        return aspectRatio > 1 ? 1 / aspectRatio : aspectRatio;
     }
 }

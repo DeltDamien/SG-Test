@@ -13,7 +13,7 @@ const MenuConstants = {
     buttonImage: "button.png",
     buttonWidth: 250,
     buttonHeight: 50,
-    buttonSpacing: 10,
+    buttonSpacing: 1,
     buttonStartX: 200,
     animatedButtonDuration: 100,
 }
@@ -23,7 +23,7 @@ export class MainMenu extends PIXI.Container {
     private readonly banner: PIXI.Graphics;
     private readonly fpsText: PIXI.Text;
 
-    constructor(private readonly props: MenuProps, private readonly app: PIXI.Application<HTMLCanvasElement>, private readonly scenesController : ScenesController) {
+    constructor(private readonly props: MenuProps, private readonly app: PIXI.Application<HTMLCanvasElement>, private readonly scenesController: ScenesController) {
         super();
 
         this.banner = new PIXI.Graphics();
@@ -31,6 +31,7 @@ export class MainMenu extends PIXI.Container {
 
         this.initializeBanner();
         this.initializeFPS();
+        this.initializeSwitchScenesButtons();
     }
 
     private initializeBanner() {
@@ -56,14 +57,24 @@ export class MainMenu extends PIXI.Container {
 
     public initializeSwitchScenesButtons() {
         const sceneIds = this.scenesController.getSceneIds();
-        for(let i = 0; i < sceneIds.length; i++) {
-            console.log(sceneIds[i]);
-            const button = new ButtonContainer();
+        const isVertical = this.app.screen.width < this.app.screen.height;
 
+        // Determine button layout based on screen orientation
+        if (isVertical) {
+            this.layoutVerticalButtons(sceneIds);
+        } else {
+            this.layoutHorizontalButtons(sceneIds);
+        }
+    }
+
+    private layoutVerticalButtons(sceneIds: string[]) {
+        // If the layout is vertical, arrange buttons in a column
+        for (let i = 0; i < sceneIds.length; i++) {
+            const button = new ButtonContainer();
             button.enabled = true;
 
             button.onPress.connect(() => {
-               this.scenesController.switchToSceneId(sceneIds[i]);
+                this.scenesController.switchToSceneId(sceneIds[i]);
             });
 
             const buttonView = new Container();
@@ -72,10 +83,36 @@ export class MainMenu extends PIXI.Container {
             buttonView.addChild(new PIXI.Text(text, {
                 fontFamily: 'Arial',
                 fontSize: 24,
-                fill: 0xffffff}));
+                fill: 0xffffff
+            }));
 
             button.addChild(buttonView);
-            button.position.set(MenuConstants.buttonStartX + MenuConstants.buttonWidth * i + ScenesConstants.spacing, ScenesConstants.spacing * 0.5);
+            button.position.set(MenuConstants.buttonStartX, ScenesConstants.spacing * 0.5 + i * (MenuConstants.buttonHeight + MenuConstants.buttonSpacing));
+            this.addChild(button);
+        }
+    }
+
+    private layoutHorizontalButtons(sceneIds: string[]) {
+        // If the layout is horizontal, arrange buttons in a row
+        for (let i = 0; i < sceneIds.length; i++) {
+            const button = new ButtonContainer();
+            button.enabled = true;
+
+            button.onPress.connect(() => {
+                this.scenesController.switchToSceneId(sceneIds[i]);
+            });
+
+            const buttonView = new Container();
+            const text = sceneIds[i];
+
+            buttonView.addChild(new PIXI.Text(text, {
+                fontFamily: 'Arial',
+                fontSize: 24,
+                fill: 0xffffff
+            }));
+
+            button.addChild(buttonView);
+            button.position.set(MenuConstants.buttonStartX + i * (MenuConstants.buttonWidth + MenuConstants.buttonSpacing), ScenesConstants.spacing * 0.5);
             this.addChild(button);
         }
     }
