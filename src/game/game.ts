@@ -14,6 +14,7 @@ export class Game {
             height: window.innerHeight,
             resolution: window.devicePixelRatio || 1,
             autoDensity: true,
+            resizeTo: window
         });
 
         document.body.appendChild(this.application.view);
@@ -26,7 +27,6 @@ export class Game {
     public async initialize() {
         await this.sceneController.initialize(ScenesConstants.sceneConfigPath);
         this.application.stage.addChild(this.mainMenu);
-        console.log(this.application.stage.children);
         this.application.ticker.maxFPS = 60;
         this.application.ticker.add((deltaTime) => this.update(deltaTime));
         this.mainMenu.initializeSwitchScenesButtons();
@@ -34,6 +34,7 @@ export class Game {
 
     private onResize(): void {
         this.application.renderer.resize(window.innerWidth, window.innerHeight);
+        this.sceneController.resize();
     }
 
     public update(deltaTime: number) {

@@ -25,11 +25,13 @@ export class Scene extends PIXI.Container {
         this.backgroundContainer.zIndex = ScenesConstants.backgroundContainerZIndex;
         this.initialize();
 
-         this.renderable = false;
+        this.visible = false;
     }
 
     public initialize(){
-        this.initializeBackground(this.sceneConfig.backgroundImageId);
+         if (this.sceneConfig.backgroundImageId !== undefined) {
+             this.initializeBackground(this.sceneConfig.backgroundImageId);
+         }
         this.initializeTitle(this.sceneConfig.displayName);
         this.addChild(this.backgroundContainer);
         this.addChild(this.gameplayContainer);
@@ -58,11 +60,47 @@ export class Scene extends PIXI.Container {
     }
 
     protected initializeBackground(backgroundImageId: string | undefined) {
-        const pathToBackgroundId = ScenesConstants.imagesAssetFolder + (backgroundImageId ?? ScenesConstants.defaultBackgroundImageId);
+        const pathToBackgroundId = ScenesConstants.imagesAssetFolder + (backgroundImageId);
         const backgroundSprite = PIXI.Sprite.from(pathToBackgroundId);
 
         const screenAspectRatio = this.getScreenAspectRatio();
-        const backgroundAspectRatio = backgroundSprite.width / backgroundSprite.height;
+
+        this.resizeBackground(screenAspectRatio, backgroundSprite.width / backgroundSprite.height);
+
+        backgroundSprite.anchor.set(0.5);
+        backgroundSprite.x = 0;
+        backgroundSprite.y = 0;
+
+        this.backgroundContainer.addChild(backgroundSprite);
+    }
+
+    protected getScreenAspectRatio() {
+        return this.app.screen.width / this.app.screen.height;
+    }
+
+
+    public start() {
+        this.visible = true;
+    }
+
+    public update(_deltaTime: number)
+    {
+        // Update the scene elements
+    }
+
+    public disable(){
+        this.visible = false;
+    }
+
+    public onResize() {
+        const screenAspectRatio = this.getScreenAspectRatio();
+        const backgroundSprite = this.backgroundContainer.children[0] as PIXI.Sprite;
+        if (backgroundSprite) {
+            this.resizeBackground(screenAspectRatio, backgroundSprite.width / backgroundSprite.height)
+        }
+    }
+
+    private resizeBackground(screenAspectRatio:number, backgroundAspectRatio: number){
 
         if (screenAspectRatio > backgroundAspectRatio) {
             this.backgroundContainer.width = this.app.screen.width;
@@ -74,31 +112,5 @@ export class Scene extends PIXI.Container {
 
         this.backgroundContainer.x = this.app.screen.width / 2;
         this.backgroundContainer.y = this.app.screen.height / 2;
-
-        backgroundSprite.anchor.set(0.5);
-        backgroundSprite.x = 0;
-        backgroundSprite.y = 0;
-
-        this.backgroundContainer.addChild(backgroundSprite);
-    }
-
-    private getScreenAspectRatio() {
-        return this.app.screen.width / this.app.screen.height;
-    }
-
-
-
-
-    public start() {
-        this.renderable = true;
-    }
-
-    public update(_deltaTime: number)
-    {
-        // Update the scene elements
-    }
-
-    public disable(){
-        this.renderable = false;
     }
 }

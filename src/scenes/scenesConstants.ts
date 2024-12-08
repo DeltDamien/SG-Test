@@ -6,5 +6,4 @@ export const ScenesConstants = {
     spacing:8,
     sceneConfigPath: "/assets/configs/scenesConfigs.json",
     imagesAssetFolder: "/assets/images/",
-    defaultBackgroundImageId: "defaultBackground.png",
 }

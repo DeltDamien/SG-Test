@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import {Scene} from "./scene";
-import {AceOfShadowsScene} from "./aceOfShadows/aceOfShadowScene";
-import {MagicWordscene} from "./magicWords/magicWordscene";
+import {AceOfShadowsScene} from "./aceOfShadow/aceOfShadowScene";
+import {MagicWordsScene} from "./magicWords/magicWordscene";
 import {PhoenixFlameScene} from "./phoenixFlame/phoenixFlameScene";
 
 
@@ -14,10 +14,11 @@ export interface SceneConfig {
 export class ScenesController {
     private scenes: Map<string, Scene> = new Map();
 
+    // @ts-ignore
     private sceneIdToScene: Map<string, typeof Scene> = new Map([
         ["aceOfShadows", AceOfShadowsScene],
-        ["magicWords", MagicWordscene],
         ["phoenixFlame", PhoenixFlameScene],
+        ["magicWords", MagicWordsScene],
     ]);
 
 
@@ -83,6 +84,12 @@ export class ScenesController {
 
     public getSceneIds(): string[] {
         return Array.from(this.scenes.keys());
+    }
+
+    public resize(): void {
+        for (const scene of this.scenes.values()) {
+            scene.onResize();
+        }
     }
 }
 
