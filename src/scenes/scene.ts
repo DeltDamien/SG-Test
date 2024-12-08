@@ -23,6 +23,7 @@ export class Scene extends PIXI.Container {
         this.gameplayContainer.zIndex = ScenesConstants.gameplayContainerZIndex;
         this.uiContainer.zIndex = ScenesConstants.uiContainerZIndex;
         this.backgroundContainer.zIndex = ScenesConstants.backgroundContainerZIndex;
+
         this.initialize();
 
         this.visible = false;
@@ -75,7 +76,11 @@ export class Scene extends PIXI.Container {
     }
 
     protected getScreenAspectRatio() {
-        return this.app.screen.width / this.app.screen.height;
+         if (this.app.screen.height <= this.app.screen.width) {
+            return this.app.screen.height / this.app.screen.width;
+         } else {
+            return this.app.screen.width / this.app.screen.height;
+         }
     }
 
 

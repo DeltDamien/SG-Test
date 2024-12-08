@@ -158,35 +158,4 @@ export class AceOfShadowsScene extends Scene {
     }
 
     public override update(_deltaTime: number): void {}
-
-    public override onResize() {
-        super.onResize();
-
-        const screenWidth = this.app.screen.width;
-        const screenHeight = this.app.screen.height;
-
-        const isPortrait = screenHeight > screenWidth;
-        console.log(screenWidth, screenHeight, isPortrait);
-
-        // move decks to side by side if landscape and one on top of the other if portrait
-        if (isPortrait) {
-            this.firstStackPosition = { x: screenWidth * 0.5 - AceOfShadowConstants.stackXOffset, y: screenHeight * 0.3 };
-            this.secondStackPosition = { x: screenWidth * 0.5 - AceOfShadowConstants.stackXOffset, y: screenHeight * 0.6 };
-        } else {
-            this.firstStackPosition = { x: screenWidth * 0.5 - AceOfShadowConstants.stackXOffset, y: screenHeight * 0.4 };
-            this.secondStackPosition = { x: screenWidth * 0.5 + AceOfShadowConstants.stackXOffset, y: screenHeight * 0.4 };
-        }
-
-        for (let i = 0; i < this.firstStack.length; i++) {
-            const card = this.firstStack[i];
-            card.x = this.firstStackPosition.x + (i === AceOfShadowConstants.totalCard - 1 ? AceOfShadowConstants.belowCardOffset : 0);
-            card.y = this.firstStackPosition.y + (i === AceOfShadowConstants.totalCard - 1 ? -AceOfShadowConstants.belowCardOffset : 0);
-        }
-
-        for (let i = 0; i < this.secondStack.length; i++) {
-            const card = this.secondStack[i];
-            card.x = this.secondStackPosition.x + (i * AceOfShadowConstants.belowCardOffset);
-            card.y = this.secondStackPosition.y + (i * -AceOfShadowConstants.belowCardOffset);
-        }
-    }
 }
